@@ -1,0 +1,15 @@
+<html>
+  <body>
+    {% if name %}
+    <h1>You are currently using home page of Playground & {{ name }}</h1>
+    {% else %}
+    <h1>Hello World</h1>
+    {% endif %}
+
+    <ul>
+        {% for order in orders %}
+        <li>{{ order.id }} - {{ order.customer.first_name }}</li>
+        {% endfor %}
+    </ul>
+  </body>
+</html>
