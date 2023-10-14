@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 
+admin.site.site_header= 'Django REST Project: E-commerce 01'
+admin.site.index_title= 'Take an action'
+
 urlpatterns = [
     path('',views.home),
     path("admin/", admin.site.urls),
