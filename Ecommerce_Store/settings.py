@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "tags",
     "likes",
     "store_custom",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,7 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+REST_FRAMEWORK={
+    'COERCE_DECIMAL_TO_STRING' : False
+}
