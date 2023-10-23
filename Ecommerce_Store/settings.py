@@ -42,8 +42,9 @@ INSTALLED_APPS = [
     "store",
     "tags",
     "likes",
-    "store_custom",
+    "core",
     "rest_framework",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -84,7 +85,7 @@ WSGI_APPLICATION = "Ecommerce_Store.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "storefront",
+        "NAME": "storefront2user",
         "HOST": "localhost",
         "USER": "root",
         "PASSWORD": "123456789"
@@ -140,5 +141,7 @@ INTERNAL_IPS = [
 ]
 
 REST_FRAMEWORK={
-    'COERCE_DECIMAL_TO_STRING' : False
+    'COERCE_DECIMAL_TO_STRING' : False,
 }
+
+AUTH_USER_MODEL='core.User'
