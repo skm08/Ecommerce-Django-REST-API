@@ -26,4 +26,6 @@ urlpatterns = [
     path('playground/',include('playground.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
     path('store/', include('store.urls')),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.jwt')),
 ]

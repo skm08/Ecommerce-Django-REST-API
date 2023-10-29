@@ -46,7 +46,7 @@ class Customer(models.Model):
     MEMBERSHIP_CHOICES=[
         (MEMBERSHIP_BRONZE,'Bronze'),
         (MEMBERSHIP_SILVER,'Silver'),
-        (MEMBERSHIP_GOLD,'Brozer'),
+        (MEMBERSHIP_GOLD,'Gold'),
     ]
 
     phone=models.CharField(max_length=255)
@@ -67,6 +67,9 @@ class Customer(models.Model):
     
     class Meta:
         ordering=['user__first_name','user__last_name']
+        permissions=[
+            ('view_history','Can view history')
+        ]
 
 class Order(models.Model):
     PAYMENT_STATUS_PENDING='P'
