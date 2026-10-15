@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.permissions import AllowAny
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from . import views
 
 admin.site.site_header= 'Django REST Project: E-commerce 01'
@@ -24,8 +26,9 @@ urlpatterns = [
     path('',views.home),
     path("admin/", admin.site.urls),
     path('playground/',include('playground.urls')),
-    path("__debug__/", include("debug_toolbar.urls")),
     path('store/', include('store.urls')),
     path('auth/', include('djoser.urls')),
     path('auth/', include('djoser.urls.jwt')),
+    path('api/schema/', SpectacularAPIView.as_view(permission_classes=[AllowAny]), name='schema'),
+    path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema', permission_classes=[AllowAny]), name='api-docs'),
 ]
