@@ -28,7 +28,7 @@ class Product(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(1)]
     )
-    inventory=models.IntegerField(validators=[MinValueValidator(1)])
+    inventory=models.IntegerField(validators=[MinValueValidator(0)])
     last_update=models.DateTimeField(auto_now=True)
     collection=models.ForeignKey(Collection,on_delete=models.PROTECT, related_name='products')
     promotions=models.ManyToManyField(Promotion,blank=True)
@@ -37,6 +37,7 @@ class Product(models.Model):
         return self.title
     class Meta:
         ordering=['title']
+        constraints=[models.CheckConstraint(condition=models.Q(inventory__gte=0), name='product_inventory_nonnegative')]
 
 class Customer(models.Model):
     MEMBERSHIP_BRONZE='B'
@@ -106,6 +107,7 @@ class Address(models.Model):
 class Cart(models.Model):
     id=models.UUIDField(primary_key=True, default=uuid4)
     created_at=models.DateTimeField(auto_now_add=True)
+    owner=models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='carts', null=True, blank=True)
 
 class CartItem(models.Model):
     cart=models.ForeignKey(Cart,on_delete=models.CASCADE, related_name='items')
@@ -115,10 +117,19 @@ class CartItem(models.Model):
     )
 
     class Meta:
-        unique_together=[['cart','product']]
+        constraints=[
+            models.UniqueConstraint(fields=['cart','product'], name='unique_product_per_cart'),
+            models.CheckConstraint(
+                condition=models.Q(quantity__gte=1) & models.Q(quantity__lte=100),
+                name='cart_item_quantity_between_1_and_100',
+            ),
+        ]
 
 class Review(models.Model):
     product=models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     name=models.CharField(max_length=255)
     description=models.TextField()
     date=models.DateField(auto_now_add=True)
+
+    class Meta:
+        ordering=['-date', '-id']

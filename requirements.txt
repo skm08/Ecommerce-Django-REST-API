@@ -1,0 +1,10 @@
+Django>=5.2,<5.3
+djangorestframework>=3.16,<3.17
+drf-nested-routers>=0.94,<1
+djangorestframework-simplejwt>=5.5,<6
+django-filter>=25.1,<26
+djoser>=2.3,<3
+drf-spectacular>=0.28,<1
+python-dotenv>=1,<2
+
+# Optional local development toolbar: pip install django-debug-toolbar
